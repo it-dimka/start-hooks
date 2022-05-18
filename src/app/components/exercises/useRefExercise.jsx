@@ -5,8 +5,7 @@ import Divider from "../common/divider";
 const UseRefExercise = () => {
   const ref = useRef();
 
-  const handleClick = (e) => {
-    e.stopPropagation();
+  const handleClick = () => {
     ref.current.innerText = "text";
     ref.current.style.height = "150px";
     ref.current.style.width = "80px";
