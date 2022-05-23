@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 const SelectField = ({
@@ -23,6 +23,8 @@ const SelectField = ({
                   value: options[optionName]._id
               }))
             : options;
+
+    useEffect(() => console.log("Render Select Fields"));
 
     return (
         <div className="mb-4">
@@ -59,4 +61,4 @@ SelectField.propTypes = {
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
-export default SelectField;
+export default React.memo(SelectField);
