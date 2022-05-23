@@ -29,10 +29,19 @@ const FormComponent = ({ children, validatorConfig, onSubmit, defaultData }) => 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isValid = validate();
+    const isValid = validate(data);
     if (!isValid) return;
     onSubmit(data);
   };
+
+  const handleKeyDown = useCallback((e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      const form = e.target.form;
+      const indexField = Array.prototype.indexOf.call(form, e.target);
+      form.elements[indexField + 1].focus();
+    }
+  }, []);
 
   const clonedElements = React.Children.map(children, (child) => {
     const childType = typeof child.type;
@@ -45,7 +54,8 @@ const FormComponent = ({ children, validatorConfig, onSubmit, defaultData }) => 
         ...child.props,
         onChange: handleChange,
         value: data[child.props.name] || "",
-        error: errors[child.props.name]
+        error: errors[child.props.name],
+        onKeyDown: handleKeyDown
       };
     }
     if (childType === "string") {
